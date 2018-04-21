@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_margin="6dp"
+    android:padding="4dp"
+    android:background="@color/bgrItem">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_ccy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="USD" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_to"/>
+        <TextView
+            android:id="@+id/text_base_ccy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="UAH"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/text_bye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/text_bye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="25.45"
+            android:layout_marginEnd="80dp"/>
+        <TextView
+            android:text="@string/text_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/text_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="26.33"/>
+    </LinearLayout>
+</LinearLayout>
