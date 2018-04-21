@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         refreshLayout = findViewById(R.id.swipe);
         refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         RecyclerView recyclerView = findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerViewAdapter();
