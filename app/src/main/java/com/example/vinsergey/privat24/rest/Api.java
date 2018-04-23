@@ -7,6 +7,6 @@ import retrofit2.http.GET;
 public interface Api {
     String BASE_URL = "https://api.privatbank.ua";
 
-    @GET("/p24api/pubinfo?exchange&json&coursid=11")
+    @GET("/p24api/pubinfo?exchange&json&coursid=5")
     Call<List<ModelCurrency>> getAllCurrency();
 }

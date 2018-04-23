@@ -1,20 +1,22 @@
 package com.example.vinsergey.privat24;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Window;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.vinsergey.privat24.rest.ModelCurrency;
 import com.example.vinsergey.privat24.rest.RecyclerViewAdapter;
 import com.example.vinsergey.privat24.rest.RestClient;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,11 +26,24 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private List<ModelCurrency> modelCurrencyList;
     private RecyclerViewAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
+    private ImageView leftFlag, rightFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FloatingActionButton actionButton = findViewById(R.id.fab);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "+380938833136")));
+            }
+        });
+
+        leftFlag = findViewById(R.id.flag_left);
+        rightFlag = findViewById(R.id.flag_right);
 
         refreshLayout = findViewById(R.id.swipe);
         refreshLayout.setOnRefreshListener(this);
@@ -44,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         getData();
     }
+
 
     private void getData(){
         RestClient.getInstance().getAllCurrency().enqueue(new Callback<List<ModelCurrency>>() {
