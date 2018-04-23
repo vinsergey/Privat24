@@ -30,7 +30,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -40,24 +39,31 @@
         app:layout_constraintStart_toEndOf="@+id/flag_left"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_ccy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="USD" />
 
         <TextView
+            android:id="@+id/date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="4dp"
-            android:text="@string/text_to" />
+            tools:text="29.05.2018 20:01:45"/>
 
-        <TextView
-            android:id="@+id/text_base_ccy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="UAH" />
+        <!--<TextView-->
+            <!--android:id="@+id/text_ccy"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:text="USD" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="4dp"-->
+            <!--android:layout_marginStart="4dp"-->
+            <!--android:text="@string/text_to" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/text_base_ccy"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:text="UAH" />-->
     </LinearLayout>
 
     <LinearLayout

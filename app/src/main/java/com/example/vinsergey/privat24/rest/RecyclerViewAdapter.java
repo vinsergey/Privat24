@@ -10,12 +10,13 @@ import android.widget.TextView;
 import com.example.vinsergey.privat24.R;
 import java.util.Collections;
 import java.util.List;
+import com.example.vinsergey.privat24.db.Currency;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<ModelCurrency> data = Collections.emptyList();
+    private List<Currency> data = Collections.emptyList();
 
-    public void setData(List<ModelCurrency> data) {
+    public void setData(List<Currency> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -49,7 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         holder.leftFlag.setImageResource(R.drawable.default_flag);
                         break;
             }
-            switch (data.get(position).baseCcy) {
+            switch (data.get(position).base_ccy) {
                 case "USD":
                     holder.rightFlag.setImageResource(R.drawable.american_flag);
                     break;
@@ -70,9 +71,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     break;
             }
 
-        holder.ccy.setText(data.get(position).ccy);
-        holder.base_ccy.setText(data.get(position).baseCcy);
-        holder.bye.setText(data.get(position).buy);
+//        holder.ccy.setText(data.get(position).ccy);
+//        holder.base_ccy.setText(data.get(position).base_ccy);
+        holder.dateTime.setText(data.get(position).dateTime);
+        holder.bye.setText(data.get(position).bye);
         holder.sale.setText(data.get(position).sale);
     }
 
@@ -82,14 +84,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView ccy, base_ccy, bye, sale;
+        private TextView ccy, base_ccy, bye, sale, dateTime;
         private ImageView leftFlag, rightFlag;
         ViewHolder(View itemView) {
             super(itemView);
             leftFlag = itemView.findViewById(R.id.flag_left);
             rightFlag = itemView.findViewById(R.id.flag_right);
-            ccy = itemView.findViewById(R.id.text_ccy);
-            base_ccy = itemView.findViewById(R.id.text_base_ccy);
+            dateTime = itemView.findViewById(R.id.date_time);
+//            ccy = itemView.findViewById(R.id.text_ccy);
+//            base_ccy = itemView.findViewById(R.id.text_base_ccy);
             bye = itemView.findViewById(R.id.text_bye);
             sale = itemView.findViewById(R.id.text_sale);
         }
