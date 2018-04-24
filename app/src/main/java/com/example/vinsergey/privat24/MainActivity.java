@@ -2,11 +2,8 @@ package com.example.vinsergey.privat24;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.icu.util.ULocale;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,24 +17,19 @@ import com.example.vinsergey.privat24.db.CurrencyEntity;
 import com.example.vinsergey.privat24.rest.ModelCurrency;
 import com.example.vinsergey.privat24.rest.RecyclerViewAdapter;
 import com.example.vinsergey.privat24.rest.RestClient;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener,
+        View.OnClickListener {
 
+    public static final String KEY_BUNDLE = "ccy";
     private RecyclerViewAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
     private String currentDateTime;
@@ -65,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         RecyclerView recyclerView = findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecyclerViewAdapter();
+        adapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
 
         getData();
@@ -74,16 +66,19 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private void getData(){
         RestClient.getInstance().getAllCurrency().enqueue(new Callback<List<ModelCurrency>>() {
-            @SuppressLint("SimpleDateFormat")
+            @SuppressLint("DefaultLocale")
             @Override
             public void onResponse(@NonNull Call<List<ModelCurrency>> call, @NonNull Response<List<ModelCurrency>> response) {
 
-//                DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-//                Date date = new Date();
-                //currentDateTime = dateFormat.format(date);
+                TimeZone tz = TimeZone.getTimeZone("GMT+02:00");
+                Calendar c = Calendar.getInstance(tz);
 
-                Calendar cal = Calendar.getInstance(); //.getInstance(new Locale("ru_RU@calendar=buddhist"));
-                currentDateTime = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(cal.getTime());
+                currentDateTime = String.format("%02d", c.get(Calendar.DAY_OF_MONTH))+"."+
+                        String.format("%02d", c.get(Calendar.MONTH))+"."+
+                        String.format("%02d", c.get(Calendar.YEAR))+" "+
+                        String.format("%02d", c.get(Calendar.HOUR_OF_DAY))+":"+
+                        String.format("%02d", c.get(Calendar.MINUTE))+":"+
+                        String.format("%02d", c.get(Calendar.SECOND));
 
                 AppDatabase.getInstance(MainActivity.this).currencyDao().saveCurrency(mapEntity(response));
                 adapter.setData(map(AppDatabase.getInstance(MainActivity.this).currencyDao().getLastCurrency()));
@@ -97,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
     }
 
-    private List<Currency> map(List<CurrencyEntity> currencies) {
+    public static List<Currency> map(List<CurrencyEntity> currencies) {
         List<Currency> list = new ArrayList<>();
         for (CurrencyEntity item : currencies) {
             Currency currency = new Currency();
@@ -129,5 +124,15 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public void onRefresh() {
         refreshLayout.setRefreshing(true);
         getData();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        Currency currency = (Currency) v.getTag();
+        bundle.putString(KEY_BUNDLE, currency.ccy);
+        Intent intent = new Intent(this, CurrencyActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
