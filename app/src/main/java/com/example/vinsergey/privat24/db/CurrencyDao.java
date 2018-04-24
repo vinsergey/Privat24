@@ -1,6 +1,7 @@
 package com.example.vinsergey.privat24.db;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -25,4 +26,7 @@ public interface CurrencyDao {
 
     @Query("SELECT * FROM currency_table where ccy = 'BTC' ORDER BY id DESC")
     List<CurrencyEntity> getBTCCyrrency();
+
+    @Query("DELETE FROM currency_table")
+    void deleteBase();
 }

@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import com.example.vinsergey.privat24.db.AppDatabase;
 import com.example.vinsergey.privat24.db.Currency;
@@ -19,6 +21,7 @@ import com.example.vinsergey.privat24.rest.RecyclerViewAdapter;
 import com.example.vinsergey.privat24.rest.RestClient;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
@@ -70,11 +73,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void onResponse(@NonNull Call<List<ModelCurrency>> call, @NonNull Response<List<ModelCurrency>> response) {
 
-                TimeZone tz = TimeZone.getTimeZone("GMT+02:00");
+                TimeZone tz = TimeZone.getTimeZone("GMT+03:00");
                 Calendar c = Calendar.getInstance(tz);
 
                 currentDateTime = String.format("%02d", c.get(Calendar.DAY_OF_MONTH))+"."+
-                        String.format("%02d", c.get(Calendar.MONTH))+"."+
+                        String.format("%02d", c.get(Calendar.MONTH)+1)+"."+
                         String.format("%02d", c.get(Calendar.YEAR))+" "+
                         String.format("%02d", c.get(Calendar.HOUR_OF_DAY))+":"+
                         String.format("%02d", c.get(Calendar.MINUTE))+":"+
@@ -134,5 +137,21 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         Intent intent = new Intent(this, CurrencyActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.clear_base) {
+            AppDatabase.getInstance(MainActivity.this).currencyDao().deleteBase();
+            getData();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

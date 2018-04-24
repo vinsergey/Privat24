@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:layout_margin="4dp"
-    android:padding="4dp"
     android:background="@color/bgrItem">
 
     <ImageView
@@ -17,7 +16,8 @@
         android:layout_marginStart="8dp"
         tools:src="@drawable/american_flag"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo" />
 
     <ImageView
         android:id="@+id/flag_right"
@@ -27,14 +27,15 @@
         tools:src="@drawable/ukraine_flag"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintEnd_toStartOf="@+id/flag_right"
         app:layout_constraintStart_toEndOf="@+id/flag_left"
         app:layout_constraintTop_toTopOf="parent">
@@ -46,58 +47,50 @@
             android:layout_height="wrap_content"
             tools:text="29.05.2018 20:01:45"/>
 
-        <!--<TextView-->
-            <!--android:id="@+id/text_ccy"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--tools:text="USD" />-->
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginEnd="4dp"-->
-            <!--android:layout_marginStart="4dp"-->
-            <!--android:text="@string/text_to" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@string/text_bye" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/text_base_ccy"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--tools:text="UAH" />-->
+            <TextView
+                android:id="@+id/text_bye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="25.45" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@string/text_sale" />
+
+            <TextView
+                android:id="@+id/text_sale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="26.33" />
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:text="@string/text_bye" />
-
-        <TextView
-            android:id="@+id/text_bye"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            tools:text="25.45" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:text="@string/text_sale" />
-
-        <TextView
-            android:id="@+id/text_sale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="26.33" />
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

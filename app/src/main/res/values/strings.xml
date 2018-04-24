@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Privat24</string>
+    <string name="app_name">Privat 24</string>
     <string name="text_exchange_rates">Exchange Rates</string>
     <string name="text_to">to</string>
     <string name="text_bye">Bye:</string>
     <string name="text_sale">Sale:</string>
+    <string name="text_clear_base">Clear Base</string>
+    <string name="todo">TODO</string>
 </resources>
