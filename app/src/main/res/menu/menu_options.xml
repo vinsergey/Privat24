@@ -6,4 +6,14 @@
         android:orderInCategory="100"
         android:title="@string/text_clear_base"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/start_service"
+        android:orderInCategory="101"
+        android:title="@string/text_start_service"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/stop_service"
+        android:orderInCategory="101"
+        android:title="@string/text_stop_service"
+        app:showAsAction="never"/>
 </menu>

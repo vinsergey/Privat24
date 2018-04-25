@@ -21,7 +21,6 @@ import com.example.vinsergey.privat24.rest.RecyclerViewAdapter;
 import com.example.vinsergey.privat24.rest.RestClient;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public static final String KEY_BUNDLE = "ccy";
     private RecyclerViewAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
-    private String currentDateTime;
+    public static String currentDateTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         getData();
     }
-
 
     private void getData(){
         RestClient.getInstance().getAllCurrency().enqueue(new Callback<List<ModelCurrency>>() {
@@ -109,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         return list;
     }
 
-    private List<CurrencyEntity> mapEntity(Response<List<ModelCurrency>> currencies) {
+    public static List<CurrencyEntity> mapEntity(Response<List<ModelCurrency>> currencies) {
         List<CurrencyEntity> list = new ArrayList<>();
         for (ModelCurrency item : Objects.requireNonNull(currencies.body())) {
             CurrencyEntity currencyEntity = new CurrencyEntity();
@@ -151,6 +149,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (id == R.id.clear_base) {
             AppDatabase.getInstance(MainActivity.this).currencyDao().deleteBase();
             getData();
+        }
+
+        if (id == R.id.start_service) {
+            startService(new Intent(this, CurrencyService.class));
+        }
+
+        if (id == R.id.stop_service) {
+            stopService(new Intent(this, CurrencyService.class));
         }
         return super.onOptionsItemSelected(item);
     }

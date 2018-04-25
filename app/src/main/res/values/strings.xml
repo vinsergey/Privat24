@@ -6,4 +6,6 @@
     <string name="text_sale">Sale:</string>
     <string name="text_clear_base">Clear Base</string>
     <string name="todo">TODO</string>
+    <string name="text_start_service">Start Service</string>
+    <string name="text_stop_service">Stop Service</string>
 </resources>
