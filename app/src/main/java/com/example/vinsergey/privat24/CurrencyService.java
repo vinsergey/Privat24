@@ -18,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import static com.example.vinsergey.privat24.MainActivity.mapEntity;
 import static com.example.vinsergey.privat24.MainActivity.currentDateTime;
+import static com.example.vinsergey.privat24.MainActivity.hasConnection;
 
 public class CurrencyService extends Service {
     private static final String LOG_TAG = "MyLog";
@@ -50,8 +51,10 @@ public class CurrencyService extends Service {
             public void run() {
                 while (true) {
                     try {
+                        if (hasConnection(getApplicationContext())) {
+                            getData();
+                        }
                         TimeUnit.MINUTES.sleep(1);
-                        getData();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
