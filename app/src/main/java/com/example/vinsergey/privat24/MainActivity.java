@@ -1,7 +1,10 @@
 package com.example.vinsergey.privat24;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import com.example.vinsergey.privat24.db.AppDatabase;
 import com.example.vinsergey.privat24.db.Currency;
 import com.example.vinsergey.privat24.db.CurrencyEntity;
@@ -66,31 +70,36 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void getData(){
-        RestClient.getInstance().getAllCurrency().enqueue(new Callback<List<ModelCurrency>>() {
-            @SuppressLint("DefaultLocale")
-            @Override
-            public void onResponse(@NonNull Call<List<ModelCurrency>> call, @NonNull Response<List<ModelCurrency>> response) {
+        if (hasConnection(this)) {
+            RestClient.getInstance().getAllCurrency().enqueue(new Callback<List<ModelCurrency>>() {
+                @SuppressLint("DefaultLocale")
+                @Override
+                public void onResponse(@NonNull Call<List<ModelCurrency>> call, @NonNull Response<List<ModelCurrency>> response) {
 
-                TimeZone tz = TimeZone.getTimeZone("GMT+03:00");
-                Calendar c = Calendar.getInstance(tz);
+                    TimeZone tz = TimeZone.getTimeZone("GMT+03:00");
+                    Calendar c = Calendar.getInstance(tz);
 
-                currentDateTime = String.format("%02d", c.get(Calendar.DAY_OF_MONTH))+"."+
-                        String.format("%02d", c.get(Calendar.MONTH)+1)+"."+
-                        String.format("%02d", c.get(Calendar.YEAR))+" "+
-                        String.format("%02d", c.get(Calendar.HOUR_OF_DAY))+":"+
-                        String.format("%02d", c.get(Calendar.MINUTE))+":"+
-                        String.format("%02d", c.get(Calendar.SECOND));
+                    currentDateTime = String.format("%02d", c.get(Calendar.DAY_OF_MONTH))+"."+
+                            String.format("%02d", c.get(Calendar.MONTH)+1)+"."+
+                            String.format("%02d", c.get(Calendar.YEAR))+" "+
+                            String.format("%02d", c.get(Calendar.HOUR_OF_DAY))+":"+
+                            String.format("%02d", c.get(Calendar.MINUTE))+":"+
+                            String.format("%02d", c.get(Calendar.SECOND));
 
-                AppDatabase.getInstance(MainActivity.this).currencyDao().saveCurrency(mapEntity(response));
-                adapter.setData(map(AppDatabase.getInstance(MainActivity.this).currencyDao().getLastCurrency()));
-                refreshLayout.setRefreshing(false);
-            }
+                    AppDatabase.getInstance(MainActivity.this).currencyDao().saveCurrency(mapEntity(response));
+                    adapter.setData(map(AppDatabase.getInstance(MainActivity.this).currencyDao().getLastCurrency()));
+                    refreshLayout.setRefreshing(false);
+                }
 
-            @Override
-            public void onFailure(@NonNull Call<List<ModelCurrency>> call, @NonNull Throwable t) {
+                @Override
+                public void onFailure(@NonNull Call<List<ModelCurrency>> call, @NonNull Throwable t) {
 
-            }
-        });
+                }
+            });
+        } else {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+            adapter.setData(map(AppDatabase.getInstance(MainActivity.this).currencyDao().getLastCurrency()));
+        }
     }
 
     public static List<Currency> map(List<CurrencyEntity> currencies) {
@@ -159,5 +168,22 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             stopService(new Intent(this, CurrencyService.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public static boolean hasConnection(final Context context)
+    {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo wifiInfo = Objects.requireNonNull(cm).getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//        if (wifiInfo != null && wifiInfo.isConnected())
+//        {
+//            return true;
+//        }
+//        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//        if (wifiInfo != null && wifiInfo.isConnected())
+//        {
+//            return true;
+//        }
+        NetworkInfo wifiInfo = Objects.requireNonNull(cm).getActiveNetworkInfo();
+        return wifiInfo != null && wifiInfo.isConnected();
     }
 }
