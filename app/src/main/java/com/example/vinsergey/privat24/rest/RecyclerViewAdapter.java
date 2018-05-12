@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.vinsergey.privat24.R;
+import com.example.vinsergey.privat24.db.Currency;
 import java.util.Collections;
 import java.util.List;
-import com.example.vinsergey.privat24.db.Currency;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -38,46 +38,46 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            switch (data.get(position).ccy) {
-                case "USD":
-                    holder.leftFlag.setImageResource(R.drawable.american_flag);
-                    break;
-                case "EUR":
-                    holder.leftFlag.setImageResource(R.drawable.euro_flag);
-                    break;
-                case "RUR":
-                    holder.leftFlag.setImageResource(R.drawable.russia_flag);
-                    break;
-                case "UAH":
-                    holder.leftFlag.setImageResource(R.drawable.ukraine_flag);
-                    break;
-                case "BTC":
-                    holder.leftFlag.setImageResource(R.drawable.bitcoin_flag);
-                    break;
-                    default:
-                        holder.leftFlag.setImageResource(R.drawable.default_flag);
-                        break;
-            }
-            switch (data.get(position).base_ccy) {
-                case "USD":
-                    holder.rightFlag.setImageResource(R.drawable.american_flag);
-                    break;
-                case "EUR":
-                    holder.rightFlag.setImageResource(R.drawable.euro_flag);
-                    break;
-                case "RUR":
-                    holder.rightFlag.setImageResource(R.drawable.russia_flag);
-                    break;
-                case "UAH":
-                    holder.rightFlag.setImageResource(R.drawable.ukraine_flag);
-                    break;
-                case "BTC":
-                    holder.rightFlag.setImageResource(R.drawable.bitcoin_flag);
-                    break;
-                default:
-                    holder.rightFlag.setImageResource(R.drawable.default_flag);
-                    break;
-            }
+        switch (data.get(position).ccy) {
+            case "USD":
+                holder.leftFlag.setImageResource(R.drawable.american_flag);
+                break;
+            case "EUR":
+                holder.leftFlag.setImageResource(R.drawable.euro_flag);
+                break;
+            case "RUR":
+                holder.leftFlag.setImageResource(R.drawable.russia_flag);
+                break;
+            case "UAH":
+                holder.leftFlag.setImageResource(R.drawable.ukraine_flag);
+                break;
+            case "BTC":
+                holder.leftFlag.setImageResource(R.drawable.bitcoin_flag);
+                break;
+            default:
+                holder.leftFlag.setImageResource(R.drawable.default_flag);
+                break;
+        }
+        switch (data.get(position).base_ccy) {
+            case "USD":
+                holder.rightFlag.setImageResource(R.drawable.american_flag);
+                break;
+            case "EUR":
+                holder.rightFlag.setImageResource(R.drawable.euro_flag);
+                break;
+            case "RUR":
+                holder.rightFlag.setImageResource(R.drawable.russia_flag);
+                break;
+            case "UAH":
+                holder.rightFlag.setImageResource(R.drawable.ukraine_flag);
+                break;
+            case "BTC":
+                holder.rightFlag.setImageResource(R.drawable.bitcoin_flag);
+                break;
+            default:
+                holder.rightFlag.setImageResource(R.drawable.default_flag);
+                break;
+        }
 
         holder.itemView.setTag(data.get(position));
         holder.dateTime.setText(data.get(position).dateTime);
@@ -94,6 +94,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView bye, sale, dateTime;
         private ImageView leftFlag, rightFlag;
+
         ViewHolder(View itemView) {
             super(itemView);
             leftFlag = itemView.findViewById(R.id.flag_left);

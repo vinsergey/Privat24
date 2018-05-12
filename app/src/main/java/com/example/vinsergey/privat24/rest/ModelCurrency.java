@@ -1,6 +1,5 @@
 package com.example.vinsergey.privat24.rest;
 
-import com.example.vinsergey.privat24.db.Currency;
 import com.google.gson.annotations.SerializedName;
 
 public class ModelCurrency {

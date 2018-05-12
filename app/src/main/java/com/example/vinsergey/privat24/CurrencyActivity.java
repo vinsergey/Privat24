@@ -1,12 +1,15 @@
 package com.example.vinsergey.privat24;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import com.example.vinsergey.privat24.db.AppDatabase;
 import com.example.vinsergey.privat24.rest.RecyclerViewAdapter;
+
 import java.util.Objects;
+
 import static com.example.vinsergey.privat24.MainActivity.map;
 
 public class CurrencyActivity extends AppCompatActivity {
@@ -37,7 +40,8 @@ public class CurrencyActivity extends AppCompatActivity {
             case "BTC":
                 adapter.setData(map(AppDatabase.getInstance(CurrencyActivity.this).currencyDao().getBTCCyrrency()));
                 break;
-                default: break;
+            default:
+                break;
         }
     }
 

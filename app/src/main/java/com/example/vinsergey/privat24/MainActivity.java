@@ -6,28 +6,31 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
 import com.example.vinsergey.privat24.db.AppDatabase;
 import com.example.vinsergey.privat24.db.Currency;
 import com.example.vinsergey.privat24.db.CurrencyEntity;
 import com.example.vinsergey.privat24.rest.ModelCurrency;
 import com.example.vinsergey.privat24.rest.RecyclerViewAdapter;
 import com.example.vinsergey.privat24.rest.RestClient;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         getData();
     }
 
-    private void getData(){
+    private void getData() {
         if (hasConnection(this)) {
             RestClient.getInstance().getAllCurrency().enqueue(new Callback<List<ModelCurrency>>() {
                 @SuppressLint("DefaultLocale")
@@ -79,11 +82,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     TimeZone tz = TimeZone.getTimeZone("GMT+03:00");
                     Calendar c = Calendar.getInstance(tz);
 
-                    currentDateTime = String.format("%02d", c.get(Calendar.DAY_OF_MONTH))+"."+
-                            String.format("%02d", c.get(Calendar.MONTH)+1)+"."+
-                            String.format("%02d", c.get(Calendar.YEAR))+" "+
-                            String.format("%02d", c.get(Calendar.HOUR_OF_DAY))+":"+
-                            String.format("%02d", c.get(Calendar.MINUTE))+":"+
+                    currentDateTime = String.format("%02d", c.get(Calendar.DAY_OF_MONTH)) + "." +
+                            String.format("%02d", c.get(Calendar.MONTH) + 1) + "." +
+                            String.format("%02d", c.get(Calendar.YEAR)) + " " +
+                            String.format("%02d", c.get(Calendar.HOUR_OF_DAY)) + ":" +
+                            String.format("%02d", c.get(Calendar.MINUTE)) + ":" +
                             String.format("%02d", c.get(Calendar.SECOND));
 
                     AppDatabase.getInstance(MainActivity.this).currencyDao().saveCurrency(mapEntity(response));
@@ -170,9 +173,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         return super.onOptionsItemSelected(item);
     }
 
-    public static boolean hasConnection(final Context context)
-    {
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean hasConnection(final Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 //        NetworkInfo wifiInfo = Objects.requireNonNull(cm).getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 //        if (wifiInfo != null && wifiInfo.isConnected())
 //        {
